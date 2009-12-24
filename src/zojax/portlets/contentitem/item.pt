@@ -1,0 +1,3 @@
+<div class="z-page-description" tal:content="context/description"
+     tal:condition="context/description"></div>
+<div tal:content="structure context/@@pagelet/content.type.view"></div>

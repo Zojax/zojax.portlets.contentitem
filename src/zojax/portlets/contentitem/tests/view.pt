@@ -1,0 +1,2 @@
+
+<div class="z-test-content" tal:content="structure context/text"></div>

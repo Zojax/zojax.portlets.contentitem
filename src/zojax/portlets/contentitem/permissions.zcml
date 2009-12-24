@@ -1,0 +1,17 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.content.featured">
+
+  <permission
+     id="zojax.MakeContentItemPortletContent"
+     title="Make content possible to be in content item portlet"
+     description="Allow to make content to be selected in content item portlet." />
+
+  <!-- permissions -->
+  <zojax:permission
+     permission="zojax.MakeContentItemPortletContent"
+     category="zojax.content.permissions.interfaces.IManagementPermission" />
+
+</configure>
