@@ -1,0 +1,19 @@
+<div class="z-portlet portlet-contentitems">
+
+  <h2 class="z-portlet-header" tal:content="context/title"
+      tal:condition="not: context/label">Portlet Header</h2>
+  <h2 class="z-portlet-header" tal:content="context/label"
+      tal:condition="context/label">Portlet Header</h2>
+
+  <div class="z-portlet-body">
+    <div class="z-portlet-item" tal:repeat="context context/contents">
+         <tal:block condition="python: view.context.showDescription == 2"
+                    content="structure pagelet:content.type.preview+portlet.contentitem" />
+         <tal:block condition="python: view.context.showDescription == 1"
+                    content="structure pagelet:content.type.preview+portlet.contentitem.short" />
+         <tal:block condition="python: view.context.showDescription == 3"
+                    content="structure pagelet:content.type.preview+portlet.contentitem.minimal" />
+    </div>
+  </div>
+
+</div>

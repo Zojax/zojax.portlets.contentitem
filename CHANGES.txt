@@ -1,0 +1,44 @@
+=======
+CHANGES
+=======
+
+1.0.1 (Unreleased)
+------------------
+
+- Textannotation moved to separate product
+
+- Content Items portlet added
+
+
+1.0.0 (2009-08-12)
+------------------
+
+- Update test for chameleon enabled setup
+
+- Copyright changed to 'Zope Foundation and Contributors'
+
+- Possibility to select any content added
+
+- Enhanced content view options
+
+- fixed label on content portlet
+
+- fixed labels on description style
+
+
+0.2.1 (2009-05-06)
+------------------
+
+- Do not use z3c.autoinclude
+
+
+0.2.0 (2009-03-21)
+------------------
+
+- Handle unauthorized error in get item
+
+
+0.1.0 (2009-03-19)
+------------------
+
+- Initial release

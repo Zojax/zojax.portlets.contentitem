@@ -1,0 +1,290 @@
+===================
+Content Item portlet
+===================
+
+    >>> from zope import component, interface, event
+    >>> from zope.lifecycleevent import ObjectModifiedEvent
+    >>> from zope.testbrowser.testing import Browser
+    >>> from zope.app.intid import IntIds
+    >>> from zope.app.intid.interfaces import IIntIds
+    >>> from zope.app.testing.functional import getRootFolder
+    >>> from zope.app.component.hooks import setSite
+    >>> from zojax.catalog.catalog import ICatalog, Catalog
+    >>> from zojax.extensions.interfaces import IExtensible
+    >>> from zojax.content.type.interfaces import IContentContainer
+    >>> from zojax.portlets.contentitem.tests.tests import TestContent
+
+    >>> root = getRootFolder()
+    >>> setSite(root)
+    >>> interface.alsoProvides(root, IExtensible, IContentContainer)
+    >>> sm = root.getSiteManager()
+    >>> root['ids'] = IntIds()
+    >>> sm.registerUtility(root['ids'], IIntIds)
+    >>> root['catalog'] = Catalog()
+    >>> sm.registerUtility(root['catalog'], ICatalog)
+
+    >>> content = TestContent(title=u'Test content', description=u'Test Content Description. Consists of 2 sentenses')
+    >>> content.text = u'Test content body text. Consists of 2 sentenses'
+    >>> root['content'] = content
+
+change portlet settings
+
+    >>> actor = Browser()
+    >>> actor.handleErrors = False
+    >>> actor.addHeader("Authorization", "Basic mgr:mgrpw")
+    >>> actor.open("http://localhost/++extensions++/")
+    >>> actor.getLink('Portlets').click()
+
+set portlets manager
+
+    >>> actor.getLink('Left column portlets').click()
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.left/?form.widgets.portletIds:list=portlet.contentitem&form.buttons.save=Save&form.widgets.status=1')
+
+setup portlet
+
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.left/')
+    >>> actor.getLink('Content Item').click()
+
+We have no options in select cause no content marked as possible to be selected
+    >>> actor.getControl(name="form.widgets.item:list").options
+    []
+
+So we enable content for portlet
+
+    >>> actor.open('http://localhost/content/context.html/presentation')
+    >>> actor.getControl(name="portlet.contentitem.widgets.enabled:list").value = ['true']
+    >>> actor.getControl(name="portlet.contentitem.buttons.save").click()
+
+We setup portlet again
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.left/')
+    >>> actor.getLink('Content Item').click()
+
+Now we have options in select cause no content marked as possible to be selected
+    >>> actor.getControl(name="form.widgets.item:list").displayOptions
+    ['Test content (content)']
+    >>> actor.getControl(name="form.widgets.item:list").displayValue = ['Test content (content)']
+    >>> actor.getControl(name="form.buttons.save").click()
+
+check portlet
+
+    >>> user = Browser()
+    >>> user.handleErrors = False
+    >>> user.addHeader("Authorization", "Basic mgr:mgrpw")
+    >>> user.open("http://localhost/test.html")
+    >>> print user.contents
+    <html>
+    ...
+      <td><div class="z-portlet portlet-contentitem">
+      <h2 class="z-portlet-header">Test content</h2>
+      <div class="z-portlet-body">
+        <div class="z-portlet-item">
+             <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
+    </div>
+    </div>
+    </div></td>
+    ...
+    </html>
+
+
+We have options how to display content description
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.left/')
+    >>> actor.getLink('Content Item').click()
+    >>> actor.getControl(name="form.widgets.showDescription:list").displayOptions
+    ['Short', 'Full', 'Minimal']
+    >>> actor.getControl(name="form.widgets.showDescription:list").displayValue = ['Short']
+    >>> actor.getControl(name="form.buttons.save").click()
+
+check portlet
+
+    >>> user = Browser()
+    >>> user.handleErrors = False
+    >>> user.addHeader("Authorization", "Basic mgr:mgrpw")
+    >>> user.open("http://localhost/test.html")
+    >>> print user.contents
+    <html>
+    ...
+      <td><div class="z-portlet portlet-contentitem">
+      <h2 class="z-portlet-header">Test content</h2>
+      <div class="z-portlet-body">
+        <div class="z-portlet-item">
+             <div class="z-page-description">Test Content Description...</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
+    </div>
+    </div>
+    </div></td>
+    ...
+    </html>
+
+
+set content portlets manager
+
+    >>> actor.open("http://localhost/++extensions++/")
+    >>> actor.getLink('Portlets').click()
+    >>> actor.getLink('Content column portlets').click()
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.content/?form.widgets.portletIds:list=portlet.contentitem&form.buttons.save=Save&form.widgets.status=1')
+
+setup portlet
+
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.content/')
+    >>> actor.getLink('Content Item').click()
+    >>> actor.getControl(name="form.widgets.item:list").displayValue = ['Test content (content)']
+    >>> actor.getControl(name="form.buttons.save").click()
+
+check portlet
+
+    >>> user = Browser()
+    >>> user.handleErrors = False
+    >>> user.addHeader("Authorization", "Basic mgr:mgrpw")
+    >>> user.open("http://localhost/test2.html")
+    >>> print user.contents
+    <html>
+    ...
+      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-portlet portlet-contentitem">
+    <h2 class="z-portlet-header">Test content</h2>
+      <div class="z-portlet-body">
+        <div class="z-portlet-item">
+             <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
+    </div>
+      </div>
+    </div></div></div></div></td>
+    ...
+    </html>
+
+
+No decoration
+
+    >>> actor.getControl(name="form.widgets.decoration:list").value = ['false']
+    >>> actor.getControl(name="form.buttons.save").click()
+
+    >>> user.open("http://localhost/test2.html")
+    >>> print user.contents
+    <html>
+    ...
+    <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="context-actions">
+      <ul>
+        <li>
+          <a title="Edit" href="http://localhost/content/context.html">
+            <img src="http://localhost/@@/zojax-content-actions-interfaces-IEditContentContextAction-zmi_icon.gif" alt="EditContentContextAction" width="16" height="16" border="0" />
+          </a>
+        </li>
+      </ul>
+    </div><h1 class="z-content-title">Test content</h1><div class="z-content-description">Test Content Description. Consists of 2 sentenses</div><div class="z-content-body">
+           <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
+    </div>
+      <br /><br />
+    </div></div></div></td>
+    ...
+    </html>
+
+
+Content items portlet
+---------------------
+
+    >>> actor.open("http://localhost/++extensions++/")
+    >>> actor.getLink('Portlets').click()
+    >>> actor.getLink('Content column portlets').click()
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.content/?form.widgets.portletIds:list=&form.buttons.save=Save&form.widgets.status=1')
+
+
+set left column portlets manager
+
+    >>> actor.open("http://localhost/++extensions++/")
+    >>> actor.getLink('Portlets').click()
+    >>> actor.getLink('Left column portlets').click()
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.left/?form.widgets.portletIds:list=portlet.contentitems&form.buttons.save=Save&form.widgets.status=1')
+
+
+We setup portlet
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.left/')
+    >>> actor.getLink('Content Items').click()
+
+Now we have options in select cause no content marked as possible to be selected
+    >>> items = actor.getControl(name="form.widgets.items.from").options
+    >>> items
+    ['...']
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.left/portlet.contentitems/index.html?form.widgets.items:list='+items[0]+'&form.widgets.showDescription:list=1&form.buttons.save=Save')
+
+check portlet
+
+    >>> user = Browser()
+    >>> user.handleErrors = False
+    >>> user.addHeader("Authorization", "Basic mgr:mgrpw")
+    >>> user.open("http://localhost/test.html")
+    >>> print user.contents
+    <html>
+    ...
+      <td><div class="z-portlet portlet-contentitems">
+      <h2 class="z-portlet-header">Content Items</h2>
+      <div class="z-portlet-body">
+        <div class="z-portlet-item">
+             <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
+    </div>
+    </div>
+    </div></td>
+    ...
+    </html>
+
+
+We have options how to display content description
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.left/')
+    >>> actor.getLink('Content Items').click()
+    >>> actor.getControl(name="form.widgets.showDescription:list").displayOptions
+    ['Short', 'Full', 'Minimal']
+
+set content portlets manager
+
+    >>> actor.open("http://localhost/++extensions++/")
+    >>> actor.getLink('Portlets').click()
+    >>> actor.getLink('Content column portlets').click()
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.content/?form.widgets.portletIds:list=portlet.contentitems&form.buttons.save=Save&form.widgets.status=1')
+
+setup portlet
+
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.content/')
+    >>> actor.getLink('Content Items').click()
+    >>> items = actor.getControl(name="form.widgets.items.from").options
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.content/portlet.contentitems/index.html?form.widgets.items:list='+items[0]+'&form.widgets.showDescription:list=1&form.widgets.decoration:list=true&form.buttons.save=Save')
+
+check portlet
+
+    >>> user = Browser()
+    >>> user.handleErrors = False
+    >>> user.addHeader("Authorization", "Basic mgr:mgrpw")
+    >>> user.open("http://localhost/test2.html")
+    >>> print user.contents
+    <html>
+    ...
+      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-portlet portlet-contentitems">
+      <h2 class="z-portlet-header">Content Items</h2>
+      <div class="z-portlet-body">
+        <div class="z-portlet-item">
+    <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
+    </div>
+      </div>
+    </div></div></div></div></td>
+    ...
+    </html>
+
+
+No decoration
+
+    >>> actor.open('http://localhost/++extensions++/portlets/columns.content/portlet.contentitems/index.html?form.widgets.items:list='+items[0]+'&form.widgets.showDescription:list=1&form.widgets.decoration=false&form.buttons.save=Save')
+
+    >>> user.open("http://localhost/test2.html")
+    >>> print user.contents
+    <html>
+    ...
+    <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="context-actions">
+      <ul>
+        <li>
+          <a title="Edit" href="http://localhost/content/context.html">
+            <img src="http://localhost/@@/zojax-content-actions-interfaces-IEditContentContextAction-zmi_icon.gif" alt="EditContentContextAction" width="16" height="16" border="0" />
+          </a>
+        </li>
+      </ul>
+    </div><h1 class="z-content-title">Test content</h1><div class="z-content-description">Test Content Description. Consists of 2 sentenses</div><div class="z-content-body">
+           <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
+    </div>
+      <br /><br />
+    </div></div></div></td>
+    ...
+    </html>
