@@ -1,0 +1,49 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax">
+
+  <zojax:pagelet
+     name="test.html"
+     for="*"
+     template="test.pt"
+     permission="zope.Public" />
+
+  <zojax:pagelet
+     name="test2.html"
+     for="*"
+     template="test2.pt"
+     permission="zope.Public" />
+
+  <zojax:portletManager
+     name="columns.left"
+     class="zojax.portlet.manager.PortletManagerWithStatus"
+     schema="zojax.portlet.interfaces.IPortletManagerWithStatus"
+     title="Left column portlets" />
+
+  <zojax:portletManager
+     name="columns.content"
+     title="Content column portlets"
+     schema="zojax.content.space.portlets.interfaces.IContentPortletsManagerConfiguration"
+     provides="zojax.content.space.portlets.interfaces.IContentPortletsManager" />
+
+  <zojax:content
+     name="content.test"
+     title="Test content"
+     schema=".tests.ITestContent"
+     class=".tests.TestContent"
+     permission="zope.Public" />
+
+  <class class=".tests.TestContent">
+    <implements interface="zojax.extensions.interfaces.IExtensible" />
+    <implements interface="zojax.portlets.contentitem.interfaces.IContentItemPortletable" />
+    <require
+       permission="zope.Public"
+       interface=".tests.ITestContent" />
+  </class>
+
+  <zojax:pagelet
+     type="content.type.view"
+     for=".tests.ITestContent"
+     template="view.pt" />
+
+</configure>

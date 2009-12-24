@@ -1,0 +1,13 @@
+<div class="z-portlet portlet-htmlsource">
+
+  <h2 class="z-portlet-header" tal:content="context/contentTitle">Portlet Header</h2>
+
+  <div class="z-portlet-body">
+    <div class="z-portlet-item">
+      <div class="z-page-description" tal:content="context/contentDescription"
+     tal:condition="context/contentDescription"></div>
+      <div tal:content="structure context/content/@@pagelet/content.type.view"></div>
+    </div>
+  </div>
+
+</div>

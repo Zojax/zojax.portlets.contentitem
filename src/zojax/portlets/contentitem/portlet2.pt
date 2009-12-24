@@ -1,0 +1,22 @@
+<div class="z-portlet portlet-contentitem" tal:condition="context/decoration">
+
+  <h2 class="z-portlet-header" tal:content="context/contentTitle">Portlet Header</h2>
+
+  <div class="z-portlet-body">
+    <div class="z-portlet-item" tal:define="context context/content"
+         tal:content="structure pagelet:content.type.preview;portlet.contentitem"></div>
+    </div>
+  </div>
+
+</div>
+
+<tal:block tal:condition="not:context/decoration">
+  <tal:block define="context nocall:context/content">
+    <tal:block tal:content="structure pageelement:content.title" />
+    <tal:block tal:content="structure pageelement:content.description" />
+
+    <div class="z-content-body"
+         tal:content="structure pagelet:content.type.preview;portlet.contentitem"></div>
+  </tal:block>
+  <br /><br />
+</tal:block>
