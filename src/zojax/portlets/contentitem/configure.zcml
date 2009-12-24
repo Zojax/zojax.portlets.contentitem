@@ -1,0 +1,98 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.portlets">
+
+  <include file="permissions.zcml" />
+
+  <zojax:extension
+     name="portlet.contentitem"
+     title="Content Item Portlet Content"
+     description="Content item portlet content extension."
+     for=".interfaces.IContentItemPortletable"
+     schema=".interfaces.IContentItemPortletContent"
+     class=".extension.ContentItemPortletContentExtension"
+     permission="zojax.MakeContentItemPortletContent">
+
+    <require
+       permission="zope.View"
+       attributes="enabled"
+       interface="zojax.content.type.interfaces.IItem"
+        />
+
+  </zojax:extension>
+
+  <zojax:portlet
+     name="portlet.contentitem"
+     title="Content Item"
+     description="Show contents of selected content item in portlet."
+     class=".portlet.ContentItemPortlet"
+     schema=".interfaces.IContentItemPortlet" />
+
+  <zojax:pagelet
+     type="portlet.view"
+     template="portlet.pt"
+     for=".interfaces.IContentItemPortlet" />
+
+  <zojax:portlet
+     name="portlet.contentitem"
+     title="Content Item"
+     description="Show contents of selected content item in portlet."
+     class=".portlet.ContentItemPortlet"
+     manager="zojax.content.space.portlets.interfaces.IContentPortletsManager"
+     schema=".interfaces.IContentItemPortlet2" />
+
+  <zojax:pagelet
+     type="portlet.view"
+     template="portlet2.pt"
+     for=".interfaces.IContentItemPortlet2" />
+
+  <utility
+     name="portlet.contentitem.items"
+     factory=".vocabulary.ContentItems" />
+
+  <utility
+     name="portlet.contentitem.description"
+     component=".vocabulary.descriptionVocabulary"
+     provides="zope.schema.interfaces.IVocabularyFactory" />
+
+  <include file="indexes.zcml" />
+
+  <!-- edit form step -->
+  <zojax:pagelet
+     name="portlet.contentitem"
+     label="Content item portlet"
+     type="form.subform"
+     for=".interfaces.IContentItemPortletable
+          zojax.content.forms.interfaces.IPresentationStep"
+     class=".edit.ContentItemPortletContentEdit"
+     weight="9999" />
+
+
+<!--   portlet item view -->
+  <zojax:pagelet
+     name="portlet.contentitem"
+     type="content.type.preview"
+     for="zojax.content.type.interfaces.IContent"
+     template="item.pt"
+     />
+
+  <zojax:pagelet
+     name="portlet.contentitem.short"
+     type="content.type.preview"
+     for="zojax.content.type.interfaces.IContent"
+     template="itemshort.pt"
+     class=".item.ItemShortView"
+     />
+
+  <zojax:pagelet
+     name="portlet.contentitem.minimal"
+     type="content.type.preview"
+     for="zojax.content.type.interfaces.IContent"
+     template="itemminimal.pt"
+     />
+
+  <!-- content annotation default adapter -->
+  <adapter factory=".contentannotation.ContentAnnotation" />
+
+</configure>
