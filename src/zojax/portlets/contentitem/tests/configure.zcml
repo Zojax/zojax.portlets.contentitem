@@ -26,6 +26,12 @@
      schema="zojax.content.space.portlets.interfaces.IContentPortletsManagerConfiguration"
      provides="zojax.content.space.portlets.interfaces.IContentPortletsManager" />
 
+  <zojax:portletManager
+     name="columns.right"
+     class="zojax.portlet.manager.PortletManagerWithStatus"
+     schema="zojax.portlet.interfaces.IPortletManagerWithStatus"
+     title="Right column portlets" />
+
   <zojax:content
      name="content.test"
      title="Test content"
