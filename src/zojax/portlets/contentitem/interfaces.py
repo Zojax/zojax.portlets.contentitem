@@ -57,6 +57,11 @@ class IContentItemPortlet(interface.Interface):
         vocabulary = 'portlet.contentitem.description',
         default = 2,
         required = True)
+    
+    showLabel = schema.Bool(
+        title = _(u'Show label'),
+        default = True,
+        required = True)
 
 
 class IContentItemPortlet2(IContentItemPortlet):
@@ -87,6 +92,11 @@ class IContentItemsPortlet(interface.Interface):
         title = _(u'Show description'),
         vocabulary = 'portlet.contentitem.description',
         default = 2,
+        required = True)
+    
+    showLabel = schema.Bool(
+        title = _(u'Show label'),
+        default = True,
         required = True)
 
 

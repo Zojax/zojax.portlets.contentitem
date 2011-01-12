@@ -1,9 +1,11 @@
 <div class="z-portlet portlet-contentitems">
 
-  <h2 class="z-portlet-header" tal:content="context/title"
-      tal:condition="not: context/label">Portlet Header</h2>
-  <h2 class="z-portlet-header" tal:content="context/label"
-      tal:condition="context/label">Portlet Header</h2>
+  <tal:block tal:condition="context/showLabel">
+    <h2 class="z-portlet-header" tal:content="context/contentTitle"
+        tal:condition="not: context/label">Portlet Header</h2>
+    <h2 class="z-portlet-header" tal:content="context/label"
+        tal:condition="context/label">Portlet Header</h2>
+  </tal:block>
 
   <div class="z-portlet-body">
     <div class="z-portlet-item" tal:repeat="context context/contents">
