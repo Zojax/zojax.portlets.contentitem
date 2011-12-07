@@ -20,7 +20,7 @@ from zope.i18n import MessageFactory
 
 from zojax.content.type.interfaces import ISearchableContent
 
-_ = MessageFactory('zojax.portlets')
+_ = MessageFactory('zojax.portlets.contentitem')
 
 
 class IContentItemPortletContent(interface.Interface):
