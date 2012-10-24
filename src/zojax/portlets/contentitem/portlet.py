@@ -21,6 +21,9 @@ from zope.app.intid.interfaces import IIntIds
 
 from zojax.content.type.interfaces import IItem, IContent, IContentContainer
 
+from zojax.cache.view import cache
+from zojax.cache.keys import ContextModified
+
 
 class ContentItemPortlet(object):
 
@@ -46,6 +49,10 @@ class ContentItemPortlet(object):
 
     def isAvailable(self):
         return self.content is not None
+
+    @cache('zojax.portlets.contentitem.portlet', ContextModified)
+    def updateAndRender(self):
+        return super(ContentItemPortlet, self).updateAndRender()
 
 
 class ContentItemsPortlet(object):
