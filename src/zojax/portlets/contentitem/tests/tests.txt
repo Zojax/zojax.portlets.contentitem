@@ -74,16 +74,10 @@ check portlet
     >>> print user.contents
     <html>
     ...
-      <td><div class="z-portlet portlet-contentitem">
-      <h2 class="z-portlet-header">Test content</h2>
-      <div class="z-portlet-body">
-        <div class="z-portlet-item">
-             <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
-    </div>
-    </div>
-    </div></td>
+      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-test-content">Test content</div><div class="z-test-content">Test Content Description. Consists of 2 sentenses</div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div></div></div></td>
     ...
     </html>
+
 
 
 We have options how to display content description
@@ -103,14 +97,7 @@ check portlet
     >>> print user.contents
     <html>
     ...
-      <td><div class="z-portlet portlet-contentitem">
-      <h2 class="z-portlet-header">Test content</h2>
-      <div class="z-portlet-body">
-        <div class="z-portlet-item">
-             <div class="z-page-description">Test Content Description...</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
-    </div>
-    </div>
-    </div></td>
+      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-test-content">Test content</div><div class="z-test-content">Test Content Description. Consists of 2 sentenses</div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div></div></div></td>
     ...
     </html>
 
@@ -138,17 +125,9 @@ check portlet
     >>> print user.contents
     <html>
     ...
-      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-portlet portlet-contentitem">
-    <h2 class="z-portlet-header">Test content</h2>
-      <div class="z-portlet-body">
-        <div class="z-portlet-item">
-             <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
-    </div>
-      </div>
-    </div></div></div></div></td>
+      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-test-content">Test content</div><div class="z-test-content">Test Content Description. Consists of 2 sentenses</div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div></div></div></td>
     ...
     </html>
-
 
 No decoration
 
@@ -159,22 +138,9 @@ No decoration
     >>> print user.contents
     <html>
     ...
-    <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="context-actions">
-      <ul>
-        <li>
-          <a title="Edit" href="http://localhost/content/context.html">
-            <img src="http://localhost/@@/zojax-content-actions-interfaces-IEditContentContextAction-zmi_icon.gif" alt="EditContentContextAction" width="16" height="16" border="0" />
-          </a>
-        </li>
-      </ul>
-    </div><h1 class="z-content-title">Test content</h1><div class="z-content-description">Test Content Description. Consists of 2 sentenses</div><div class="z-content-body">
-           <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
-    </div>
-      <br /><br />
-    </div></div></div></td>
+      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-test-content">Test content</div><div class="z-test-content">Test Content Description. Consists of 2 sentenses</div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div></div></div></td>
     ...
     </html>
-
 
 Content items portlet
 ---------------------
@@ -212,14 +178,7 @@ check portlet
     >>> print user.contents
     <html>
     ...
-      <td><div class="z-portlet portlet-contentitems">
-      <h2 class="z-portlet-header">Content Items</h2>
-      <div class="z-portlet-body">
-        <div class="z-portlet-item">
-             <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
-    </div>
-    </div>
-    </div></td>
+      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-test-content">Test content</div><div class="z-test-content">Test Content Description. Consists of 2 sentenses</div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div></div></div></td>
     ...
     </html>
 
@@ -253,14 +212,7 @@ check portlet
     >>> print user.contents
     <html>
     ...
-      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-portlet portlet-contentitems">
-      <h2 class="z-portlet-header">Content Items</h2>
-      <div class="z-portlet-body">
-        <div class="z-portlet-item">
-    <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
-    </div>
-      </div>
-    </div></div></div></div></td>
+      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-test-content">Test content</div><div class="z-test-content">Test Content Description. Consists of 2 sentenses</div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div></div></div></td>
     ...
     </html>
 
@@ -273,18 +225,6 @@ No decoration
     >>> print user.contents
     <html>
     ...
-    <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="context-actions">
-      <ul>
-        <li>
-          <a title="Edit" href="http://localhost/content/context.html">
-            <img src="http://localhost/@@/zojax-content-actions-interfaces-IEditContentContextAction-zmi_icon.gif" alt="EditContentContextAction" width="16" height="16" border="0" />
-          </a>
-        </li>
-      </ul>
-    </div><h1 class="z-content-title">Test content</h1><div class="z-content-description">Test Content Description. Consists of 2 sentenses</div><div class="z-content-body">
-           <div class="z-page-description">Test Content Description. Consists of 2 sentenses</div><div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div>
-    </div>
-      <br /><br />
-    </div></div></div></td>
+      <td><div id="z-portal-workspace"><div id="z-portal-viewspace"><div id="z-content"><div class="z-test-content">Test content</div><div class="z-test-content">Test Content Description. Consists of 2 sentenses</div><div class="z-test-content">Test content body text. Consists of 2 sentenses</div></div></div></div></td>
     ...
     </html>

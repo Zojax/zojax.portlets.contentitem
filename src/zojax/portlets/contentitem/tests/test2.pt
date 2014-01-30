@@ -1,1 +1,3 @@
-<tal:block content="structure provider:columns.content" />
+<div class="z-test-content" tal:content="context/content/title"></div>
+<div class="z-test-content" tal:content="context/content/description"></div>
+<div class="z-test-content" tal:content="structure context/content/text"></div>
