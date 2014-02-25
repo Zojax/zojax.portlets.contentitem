@@ -1,3 +1,1 @@
-
-<div tal:content="request/principal/id"></div>
-<div tal:content="request/principal/title"></div>
+<tal:block content="structure provider:columns.left" />

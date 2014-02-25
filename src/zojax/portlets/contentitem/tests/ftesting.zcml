@@ -9,8 +9,6 @@
 			  exclude="zojax.content.space" extras="test" />
 
   <include package="zojax.portlets.contentitem.tests" />
-  <includeOverrides package="zojax.portlets.contentitem.tests"
-		    file="overrides.zcml" />
 
   <interface
      name="DefaultSkin"
